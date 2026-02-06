@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import type { AuthError, Session } from "@supabase/supabase-js";
+import type { AuthError, Session, User } from "@supabase/supabase-js";
 import { supabase } from "../services/supabase";
 
 type UseAuthResult = {
 	session: Session | null;
+	user: User | null;
 	loading: boolean;
 	error: AuthError | null;
 	signInWithMagicLink: (email: string) => Promise<void>;
@@ -16,66 +17,60 @@ export function useAuth(): UseAuthResult {
 	const [error, setError] = useState<AuthError | null>(null);
 
 	useEffect(() => {
-		let isMounted = true;
+		supabase.auth.getSession().then(({ data, error }) => {
+			if (error) setError(error);
+			setSession(data.session ?? null);
+			setLoading(false);
+		});
 
-		supabase.auth
-			.getSession()
-			.then(({ data, error: sessionError }) => {
-				if (!isMounted) return;
-				if (sessionError) {
-					setError(sessionError);
-				}
-				setSession(data.session ?? null);
-				setLoading(false);
-			});
-
-		const { data: authListener } = supabase.auth.onAuthStateChange(
-			(_event, currentSession) => {
-				if (!isMounted) return;
-				setSession(currentSession ?? null);
-				setLoading(false);
-			}
-		);
+		const {
+			data: { subscription },
+		} = supabase.auth.onAuthStateChange((_event, currentSession) => {
+			setSession(currentSession ?? null);
+		});
 
 		return () => {
-			isMounted = false;
-			authListener.subscription.unsubscribe();
+			subscription.unsubscribe();
 		};
 	}, []);
 
 	const signInWithMagicLink = useCallback(async (email: string) => {
 		setLoading(true);
 		setError(null);
-		const { error: signInError } = await supabase.auth.signInWithOtp({
+
+		const { error } = await supabase.auth.signInWithOtp({
 			email,
 			options: {
 				shouldCreateUser: true,
+				emailRedirectTo: window.location.origin,
 			},
 		});
-		if (signInError) {
-			setError(signInError);
-		}
+
+		if (error) setError(error);
 		setLoading(false);
 	}, []);
 
 	const signOut = useCallback(async () => {
 		setLoading(true);
 		setError(null);
-		const { error: signOutError } = await supabase.auth.signOut();
-		if (signOutError) {
-			setError(signOutError);
-		}
+
+		const { error } = await supabase.auth.signOut();
+		if (error) setError(error);
+
 		setLoading(false);
 	}, []);
+
+	const user = session?.user ?? null;
 
 	return useMemo(
 		() => ({
 			session,
+			user,
 			loading,
 			error,
 			signInWithMagicLink,
 			signOut,
 		}),
-		[session, loading, error, signInWithMagicLink, signOut]
+		[session, user, loading, error, signInWithMagicLink, signOut]
 	);
 }
