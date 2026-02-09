@@ -18,7 +18,7 @@ export function CoursesPage() {
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		let isMounted = true;
+		const controller = new AbortController();
 
 		const load = async () => {
 			setLoading(true);
@@ -31,10 +31,9 @@ export function CoursesPage() {
 				.order("created_at", { ascending: false });
 
 			if (coursesError) {
-				if (isMounted) {
-					setError(coursesError.message);
-					setLoading(false);
-				}
+				if (controller.signal.aborted) return;
+				setError(coursesError.message);
+				setLoading(false);
 				return;
 			}
 
@@ -46,26 +45,24 @@ export function CoursesPage() {
 					.eq("user_id", session.user.id);
 
 				if (enrollmentError) {
-					if (isMounted) {
-						setError(enrollmentError.message);
-						setLoading(false);
-					}
+					if (controller.signal.aborted) return;
+					setError(enrollmentError.message);
+					setLoading(false);
 					return;
 				}
 				enrollmentRows = enrollmentData ?? [];
 			}
 
-			if (isMounted) {
-				setCourses(coursesData ?? []);
-				setEnrollments(enrollmentRows);
-				setLoading(false);
-			}
+			if (controller.signal.aborted) return;
+			setCourses(coursesData ?? []);
+			setEnrollments(enrollmentRows);
+			setLoading(false);
 		};
 
 		void load();
 
 		return () => {
-			isMounted = false;
+			controller.abort();
 		};
 	}, [session?.user?.id]);
 
