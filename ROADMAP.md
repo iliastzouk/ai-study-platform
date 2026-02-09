@@ -61,3 +61,15 @@ The goal is to keep the codebase clean while preserving architectural intent.
 - [ ] CI pipeline
 - [ ] Supabase migrations automation
 - [ ] Cloudflare Workers deployment
+
+⚠️ ΜΙΚΡΑ POLISH (προαιρετικά – όχι αλλαγές τώρα)
+
+Δεν χρειάζεται να αλλάξεις τίποτα για να προχωρήσουμε, αλλά να τα ξέρεις:
+
+🔹 Θα μπορούσαμε να κάνουμε parallel fetch (course + modules)
+
+🔹 Θα μπορούσαμε να ελέγξουμε enrollment (locked/unlocked)
+
+🔹 Θα μπορούσαμε να βγάλουμε Course not found σε 404 route
+
+👉 ΣΩΣΤΑ ΔΕΝ τα έκανες τώρα. Αυτά μπαίνουν στο roadmap.

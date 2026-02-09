@@ -84,9 +84,9 @@ supabase start
 supabase db reset
 ```
 
-### 5) Environment Variables
+### 5) Environment Variables (Local Development)
 
-Create the following files:
+Create the following files at these paths:
 
 - [apps/web/.env](apps/web/.env)
 - [workers/api/.env](workers/api/.env)
@@ -97,6 +97,11 @@ Create the following files:
 VITE_SUPABASE_URL=
 VITE_SUPABASE_ANON_KEY=
 VITE_API_BASE_URL=
+
+For local Supabase, you can copy values from the output of `supabase status`:
+
+- `VITE_SUPABASE_URL` → `API URL`
+- `VITE_SUPABASE_ANON_KEY` → `anon key`
 ```
 
 #### Worker (.env)
@@ -106,9 +111,14 @@ SUPABASE_URL=
 SUPABASE_SERVICE_ROLE_KEY=
 AI_PROVIDER_API_KEY=
 CORS_ALLOWED_ORIGINS=
+
+For local Supabase, use:
+
+- `SUPABASE_URL` → `API URL` from `supabase status`
+- `SUPABASE_SERVICE_ROLE_KEY` → `service_role key` from `supabase status`
 ```
 
-> Do not commit real secrets. Use `.env.local` for local overrides if needed.
+> Do not commit real secrets. Keep `.env` files out of git and use `.env.local` for local overrides if needed.
 
 ## Development
 
