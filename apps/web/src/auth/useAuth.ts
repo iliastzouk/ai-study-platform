@@ -27,6 +27,7 @@ export function useAuth(): UseAuthResult {
 			data: { subscription },
 		} = supabase.auth.onAuthStateChange((_event, currentSession) => {
 			setSession(currentSession ?? null);
+			setLoading(false);
 		});
 
 		return () => {
@@ -35,6 +36,7 @@ export function useAuth(): UseAuthResult {
 	}, []);
 
 	const signInWithMagicLink = useCallback(async (email: string) => {
+		if (!email) return;
 		setLoading(true);
 		setError(null);
 

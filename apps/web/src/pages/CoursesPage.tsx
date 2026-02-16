@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { supabase, type Database } from "../services/supabase";
 import { useAuthContext } from "../auth/AuthProvider";
 
@@ -141,7 +142,9 @@ export function CoursesPage() {
 				<ul>
 					{coursesWithEnrollment.map((course) => (
 						<li key={course.id}>
-							<h2>{course.title}</h2>
+							<h2>
+								<Link to={`/courses/${course.slug}`}>{course.title}</Link>
+							</h2>
 							{course.description ? <p>{course.description}</p> : null}
 							{course.enrolled ? (
 								<p>Enrolled ({course.enrollmentStatus ?? "active"})</p>

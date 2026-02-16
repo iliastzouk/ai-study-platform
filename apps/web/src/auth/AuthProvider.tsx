@@ -1,9 +1,4 @@
-import {
-	createContext,
-	useContext,
-	type ReactNode,
-	type PropsWithChildren,
-} from "react";
+import { createContext, useContext, type PropsWithChildren } from "react";
 import type { AuthError, Session, User } from "@supabase/supabase-js";
 import { useAuth } from "./useAuth";
 

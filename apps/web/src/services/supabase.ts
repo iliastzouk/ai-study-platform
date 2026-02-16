@@ -31,6 +31,7 @@ export type Database = {
 					created_at?: string;
 					updated_at?: string;
 				};
+				Relationships: [];
 			};
 			modules: {
 				Row: {
@@ -60,6 +61,7 @@ export type Database = {
 					created_at?: string;
 					updated_at?: string;
 				};
+				Relationships: [];
 			};
 			lessons: {
 				Row: {
@@ -89,6 +91,7 @@ export type Database = {
 					created_at?: string;
 					updated_at?: string;
 				};
+				Relationships: [];
 			};
 			questions: {
 				Row: {
@@ -121,6 +124,7 @@ export type Database = {
 					created_at?: string;
 					updated_at?: string;
 				};
+				Relationships: [];
 			};
 			user_progress: {
 				Row: {
@@ -162,6 +166,7 @@ export type Database = {
 					created_at?: string;
 					updated_at?: string;
 				};
+				Relationships: [];
 			};
 			enrollments: {
 				Row: {
@@ -191,6 +196,7 @@ export type Database = {
 					created_at?: string;
 					updated_at?: string;
 				};
+				Relationships: [];
 			};
 		};
 		Views: Record<string, never>;
