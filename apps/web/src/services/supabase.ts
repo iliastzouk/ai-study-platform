@@ -80,6 +80,7 @@ export type Database = {
 					id: string;
 					module_id: string;
 					lesson_number: number;
+					lesson_type: string;
 					title: string;
 					content: string | null;
 					created_at: string;
@@ -89,6 +90,7 @@ export type Database = {
 					id?: string;
 					module_id: string;
 					lesson_number: number;
+					lesson_type?: string;
 					title: string;
 					content?: string | null;
 					created_at?: string;
@@ -98,6 +100,7 @@ export type Database = {
 					id?: string;
 					module_id?: string;
 					lesson_number?: number;
+					lesson_type?: string;
 					title?: string;
 					content?: string | null;
 					created_at?: string;
