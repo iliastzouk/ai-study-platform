@@ -60,7 +60,7 @@ export function CoursePage() {
 			if (moduleIds.length > 0) {
 				const { data: lessonsData, error: lessonsError } = await supabase
 					.from("lessons")
-					.select("id, module_id, lesson_number, title, content, created_at, updated_at")
+					.select("id, module_id, lesson_number, lesson_type, title, content, created_at, updated_at")
 					.in("module_id", moduleIds)
 					.order("lesson_number", { ascending: true });
 
