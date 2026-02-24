@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.output/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Vite / TypeScript caches
+*.tsbuildinfo
+.vite/
+
+# Wrangler / Cloudflare
+.wrangler/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json

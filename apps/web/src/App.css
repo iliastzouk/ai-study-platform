@@ -441,3 +441,302 @@ button:disabled {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
 }
+
+/* =========================================================================
+   Lesson page
+   ========================================================================= */
+
+.breadcrumb {
+	display: flex;
+	align-items: center;
+	gap: var(--space-3);
+	font-size: 0.9rem;
+	color: var(--muted);
+}
+
+.lessonSection {
+	border: 1px solid var(--border);
+	background: color-mix(in srgb, var(--bg-elev-1) 80%, transparent);
+	border-radius: var(--radius);
+	padding: var(--space-5);
+	margin-bottom: var(--space-5);
+}
+
+.lessonSectionTitle {
+	margin: 0 0 var(--space-4);
+	font-size: 1.1rem;
+	letter-spacing: -0.01em;
+}
+
+.lessonSectionToggle {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	margin-bottom: var(--space-3);
+}
+
+.lessonSectionToggle .lessonSectionTitle {
+	margin: 0;
+}
+
+.toggleIcon {
+	color: var(--faint);
+	font-size: 0.85rem;
+}
+
+/* Lesson content — plain preformatted text */
+.lessonContent {
+	white-space: pre-wrap;
+	word-break: break-word;
+	font-family: inherit;
+	font-size: 1rem;
+	line-height: 1.7;
+	color: var(--text);
+	margin: 0;
+}
+
+.summaryText {
+	line-height: 1.7;
+	color: var(--text);
+	margin: 0;
+}
+
+/* Lesson list on CoursePage */
+.lessonList {
+	list-style: none;
+	padding: 0;
+	margin: var(--space-4) 0 0;
+	display: grid;
+	gap: 8px;
+}
+
+.lessonLink {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 12px;
+	border-radius: 10px;
+	border: 1px solid var(--border);
+	background: color-mix(in srgb, var(--bg-elev-2) 60%, transparent);
+	color: var(--text);
+	font-size: 0.95rem;
+}
+
+.lessonLink:hover {
+	text-decoration: none;
+	border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
+	background: color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+/* =========================================================================
+   Flashcards
+   ========================================================================= */
+
+.flashcardsGrid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	gap: var(--space-4);
+}
+
+.flashcard {
+	perspective: 1200px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	height: 160px;
+	text-align: left;
+}
+
+.flashcardInner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	transform-style: preserve-3d;
+	transition: transform 0.38s ease;
+	border-radius: var(--radius-sm);
+}
+
+.flashcard.flashcardFlipped .flashcardInner {
+	transform: rotateY(180deg);
+}
+
+.flashcardFace {
+	position: absolute;
+	inset: 0;
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--border);
+	padding: var(--space-4);
+	display: flex;
+	flex-direction: column;
+	background: color-mix(in srgb, var(--bg-elev-2) 80%, transparent);
+}
+
+.flashcardFace p {
+	margin: 8px 0 0;
+	font-size: 0.95rem;
+	line-height: 1.5;
+	color: var(--text);
+}
+
+.flashcardBack {
+	transform: rotateY(180deg);
+	background: color-mix(in srgb, var(--primary) 14%, var(--bg-elev-2));
+	border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+}
+
+.flashcardLabel {
+	font-size: 0.78rem;
+	letter-spacing: 0.07em;
+	text-transform: uppercase;
+	color: var(--faint);
+}
+
+/* =========================================================================
+   Quiz
+   ========================================================================= */
+
+.quizList {
+	list-style: none;
+	padding: 0;
+	margin: 0 0 var(--space-5);
+	display: grid;
+	gap: var(--space-5);
+}
+
+.quizItem {
+	padding-bottom: var(--space-4);
+	border-bottom: 1px solid var(--border);
+}
+
+.quizItem:last-child {
+	border-bottom: none;
+}
+
+.quizQuestion {
+	font-weight: 600;
+	margin: 0 0 var(--space-3);
+	line-height: 1.5;
+}
+
+.quizChoices {
+	display: grid;
+	gap: 8px;
+}
+
+.quizChoice {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 10px 12px;
+	border-radius: 10px;
+	border: 1px solid var(--border);
+	background: color-mix(in srgb, var(--bg-elev-2) 60%, transparent);
+	cursor: pointer;
+	font-size: 0.95rem;
+	line-height: 1.5;
+}
+
+.quizChoice input[type="radio"] {
+	width: auto;
+	flex-shrink: 0;
+	margin-top: 2px;
+}
+
+.quizChoice:has(input:checked) {
+	border-color: color-mix(in srgb, var(--primary) 60%, var(--border));
+	background: color-mix(in srgb, var(--primary) 14%, transparent);
+}
+
+.quizChoiceCorrect {
+	border-color: color-mix(in srgb, var(--primary-2) 65%, var(--border)) !important;
+	background: color-mix(in srgb, var(--primary-2) 16%, transparent) !important;
+}
+
+.quizChoiceWrong {
+	border-color: color-mix(in srgb, var(--danger) 60%, var(--border)) !important;
+	background: color-mix(in srgb, var(--danger) 12%, transparent) !important;
+}
+
+.quizExplanation {
+	margin: 10px 0 0;
+	font-size: 0.9rem;
+	color: var(--muted);
+	line-height: 1.5;
+}
+
+.alertSuccess {
+	border-color: color-mix(in srgb, var(--primary-2) 55%, var(--border));
+	background: color-mix(in srgb, var(--primary-2) 12%, transparent);
+	border-radius: var(--radius);
+	border: 1px solid;
+	padding: 12px 14px;
+	margin-bottom: var(--space-4);
+}
+
+/* =========================================================================
+   Chat
+   ========================================================================= */
+
+.chatMessages {
+	display: grid;
+	gap: 10px;
+	margin-bottom: var(--space-4);
+	max-height: 400px;
+	overflow-y: auto;
+	padding-right: 4px;
+}
+
+.chatBubble {
+	padding: 10px 14px;
+	border-radius: 14px;
+	font-size: 0.95rem;
+	line-height: 1.6;
+	max-width: 85%;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.chatBubbleUser {
+	background: color-mix(in srgb, var(--primary) 20%, transparent);
+	border: 1px solid color-mix(in srgb, var(--primary) 45%, var(--border));
+	margin-left: auto;
+	border-bottom-right-radius: 4px;
+}
+
+.chatBubbleAi {
+	background: color-mix(in srgb, var(--bg-elev-2) 80%, transparent);
+	border: 1px solid var(--border);
+	margin-right: auto;
+	border-bottom-left-radius: 4px;
+}
+
+.chatBubbleLoading {
+	color: var(--faint);
+	font-style: italic;
+}
+
+.chatInputRow {
+	display: grid;
+	gap: 10px;
+}
+
+.chatInput {
+	resize: vertical;
+	min-height: 80px;
+}
+
+@media (min-width: 640px) {
+	.chatInputRow {
+		grid-template-columns: 1fr auto;
+		align-items: end;
+	}
+}
+

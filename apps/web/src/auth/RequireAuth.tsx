@@ -1,5 +1,5 @@
 import { useEffect, type ReactNode } from "react";
-import { useAuthContext } from "./AuthProvider";
+import { useAuthContext } from "./useAuthContext";
 
 type RequireAuthProps = {
 	children: ReactNode;

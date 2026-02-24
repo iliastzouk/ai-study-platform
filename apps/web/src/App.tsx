@@ -5,6 +5,7 @@ import { RequireAuth } from "./auth/RequireAuth";
 import LoginPage from "./pages/LoginPage";
 import CoursesPage from "./pages/CoursesPage";
 import CoursePage from "./pages/CoursePage";
+import LessonPage from "./pages/LessonPage";
 import AppLayout from "./layouts/AppLayout";
 
 import "./App.css";
@@ -36,8 +37,7 @@ function App() {
 					>
 						<Route index element={<Dashboard />} />
 						<Route path="courses" element={<CoursesPage />} />
-						<Route path="courses/:slug" element={<CoursePage />} />
-					</Route>
+						<Route path="courses/:slug" element={<CoursePage />} />					<Route path="courses/:slug/lessons/:lessonId" element={<LessonPage />} />					</Route>
 
 					{/* Fallback */}
 					<Route path="*" element={<Navigate to="/" replace />} />

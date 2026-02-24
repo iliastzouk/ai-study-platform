@@ -1,5 +1,17 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
+// ---------------------------------------------------------------------------
+// Shared AI types used in the Database schema and across the app
+// ---------------------------------------------------------------------------
+export type AiFlashcard = { q: string; a: string };
+export type AiQuizItem = {
+	question: string;
+	choices: [string, string, string, string];
+	correct: number;
+	explanation: string;
+};
+export type QuizAnswer = { question_index: number; selected: number };
+
 export type Database = {
 	public: {
 		Tables: {
@@ -198,6 +210,40 @@ export type Database = {
 				};
 				Relationships: [];
 			};
+			ai_generated_assets: {
+				Row: {
+					id: string;
+					lesson_id: string;
+					summary: string | null;
+					flashcards: AiFlashcard[] | null;
+					quiz: AiQuizItem[] | null;
+					generated_at: string;
+					updated_at: string;
+				};
+				Insert: never; // write via service role only
+				Update: never;
+				Relationships: [];
+			};
+			quiz_attempts: {
+				Row: {
+					id: string;
+					user_id: string;
+					lesson_id: string;
+					answers: QuizAnswer[];
+					score: number | null;
+					completed_at: string;
+				};
+				Insert: {
+					id?: string;
+					user_id: string;
+					lesson_id: string;
+					answers: QuizAnswer[];
+					score?: number | null;
+					completed_at?: string;
+				};
+				Update: never; // append-only
+				Relationships: [];
+			};
 		};
 		Views: Record<string, never>;
 		Functions: Record<string, never>;
@@ -219,3 +265,10 @@ export const supabase: SupabaseClient<Database> = createClient<Database>(
 );
 
 export default supabase;
+
+// ---------------------------------------------------------------------------
+// Worker API base URL
+// ---------------------------------------------------------------------------
+export const apiBaseUrl = (
+	import.meta.env.VITE_API_BASE_URL as string | undefined ?? ""
+).replace(/\/$/, "");

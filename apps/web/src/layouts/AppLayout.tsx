@@ -1,22 +1,26 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
-import { useAuthContext } from "../auth/AuthProvider";
+import { useAuthContext } from "../auth/useAuthContext";
 
 export function AppLayout() {
 	const { user, signOut, loading } = useAuthContext();
 	const location = useLocation();
-	const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
-	useEffect(() => {
-		// Close mobile nav on route change.
-		setMobileNavOpen(false);
-	}, [location.pathname]);
+	// Store the pathname at which the nav was last opened.
+	// When the current pathname differs, the nav is considered closed —
+	// no effect or ref access during render required.
+	const [navState, setNavState] = useState({ open: false, openedAt: location.pathname });
+	const mobileNavOpen = navState.open && navState.openedAt === location.pathname;
+
+	const openNav = () => setNavState({ open: true, openedAt: location.pathname });
+	const closeNav = () => setNavState((s) => ({ ...s, open: false }));
+	const toggleNav = () => { if (mobileNavOpen) closeNav(); else openNav(); };
 
 	useEffect(() => {
 		if (!mobileNavOpen) return;
 
 		const onKeyDown = (event: KeyboardEvent) => {
-			if (event.key === "Escape") setMobileNavOpen(false);
+			if (event.key === "Escape") closeNav();
 		};
 		window.addEventListener("keydown", onKeyDown);
 		return () => window.removeEventListener("keydown", onKeyDown);
@@ -49,7 +53,7 @@ export function AppLayout() {
 							className="iconBtn"
 							aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
 							aria-expanded={mobileNavOpen}
-							onClick={() => setMobileNavOpen((v) => !v)}
+							onClick={toggleNav}
 						>
 							<svg
 								viewBox="0 0 24 24"
@@ -159,7 +163,7 @@ export function AppLayout() {
 			<div
 				className={`drawerOverlay${mobileNavOpen ? " drawerOverlayOpen" : ""}`}
 				role="presentation"
-				onClick={() => setMobileNavOpen(false)}
+			onClick={closeNav}
 			/>
 			<aside
 				className={`drawer${mobileNavOpen ? " drawerOpen" : ""}`}
@@ -174,7 +178,7 @@ export function AppLayout() {
 						type="button"
 						className="iconBtn"
 						aria-label="Close menu"
-						onClick={() => setMobileNavOpen(false)}
+					onClick={closeNav}
 					>
 						<svg
 							viewBox="0 0 24 24"

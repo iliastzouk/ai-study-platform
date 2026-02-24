@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase, type Database } from "../services/supabase";
-import { useAuthContext } from "../auth/AuthProvider";
+import { useAuthContext } from "../auth/useAuthContext";
 
 type CourseRow = Database["public"]["Tables"]["courses"]["Row"];
 type EnrollmentRow = Database["public"]["Tables"]["enrollments"]["Row"];

@@ -1,0 +1,12 @@
+name = "ai-study-platform-api"
+main = "src/index.ts"
+compatibility_date = "2025-02-24"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Non-secret config (override per environment below)
+# Secrets are set via: wrangler secret put OPENAI_API_KEY etc.
+# CORS_ALLOWED_ORIGINS is set per environment
+
+[env.production]
+name = "ai-study-platform-api-prod"
